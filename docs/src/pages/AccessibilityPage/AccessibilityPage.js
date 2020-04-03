@@ -17,6 +17,7 @@
  */
 
 import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { cssModules } from 'bpk-react-utils';
 import BpkHorizontalNav, {
@@ -101,78 +102,73 @@ SubpageNav.propTypes = {
   onAssistiveTechnologyClick: PropTypes.func.isRequired,
 };
 
-class AccessibilityPage extends Component {
-  constructor() {
-    super();
-
-    this.state = { selectedSubpage: 'overview' };
-  }
-
-  componentDidMount() {
-    const location = window.location.pathname;
-    location.split('/').forEach(path => {
-      if (
-        path === 'overview' ||
-        path === 'design' ||
-        path === 'copy' ||
-        path === 'engineering'
-      ) {
-        this.setState({ selectedSubpage: path });
-      }
-    });
-  }
-
-  subpageSelected = subpage => {
-    window.history.pushState({}, '', `/guidelines/accessibility/${subpage}`);
-    this.setState({ selectedSubpage: subpage });
+const AccessibilityPage = props => {
+  const subpageSelected = subpage => {
+    props.history.push(`/guidelines/accessibility/${subpage}`);
   };
 
-  render() {
-    const sections = [
-      {
-        id: 'intro',
-        className: getClassName('bpk-docs-accessibility-page__nav'),
-        contentClassName: getClassName('bpk-docs-accessibility-page__page'),
-        content: (
-          <Fragment>
-            <SubpageNav
-              selectedSubpage={this.state.selectedSubpage}
-              onOverviewClick={() => this.subpageSelected('overview')}
-              onDesignClick={() => this.subpageSelected('design')}
-              onCopyClick={() => this.subpageSelected('copy')}
-              onEngineeringClick={() => this.subpageSelected('engineering')}
-              onTestingClick={() => this.subpageSelected('testing')}
-              onAssistiveTechnologyClick={() =>
-                this.subpageSelected('assistive-technology')
-              }
-            />
-            {this.state.selectedSubpage === 'design' && (
-              <AccessibilityDesignPage />
-            )}
-            {this.state.selectedSubpage === 'overview' && (
-              <AccessibilityOverviewSubpage />
-            )}
-          </Fragment>
-        ),
-      },
-    ];
+  let selectedSubpage = 'overview';
+  const location = props.location.pathname;
+  location.split('/').forEach(path => {
+    if (
+      path === 'overview' ||
+      path === 'design' ||
+      path === 'copy' ||
+      path === 'engineering'
+    ) {
+      selectedSubpage = path;
+    }
+  });
 
-    return (
-      <GuidelinesPageBuilder
-        title="Accessibility"
-        hero={{
-          heading: 'Accessibility',
-          imageUrl: `/${AccessibilityHero}`,
-          className: getClassName('bpk-docs-accessibility-page__hero'),
-        }}
-        sections={sections}
-        nextPageLink={{
-          title: 'Strategy',
-          link: ROUTES.STRATEGY,
-        }}
-      />
-    );
-  }
-}
+  const sections = [
+    {
+      id: 'intro',
+      className: getClassName('bpk-docs-accessibility-page__nav'),
+      contentClassName: getClassName('bpk-docs-accessibility-page__page'),
+      content: (
+        <Fragment>
+          <SubpageNav
+            selectedSubpage={selectedSubpage}
+            onOverviewClick={() => subpageSelected('overview')}
+            onDesignClick={() => subpageSelected('design')}
+            onCopyClick={() => subpageSelected('copy')}
+            onEngineeringClick={() => subpageSelected('engineering')}
+            onTestingClick={() => subpageSelected('testing')}
+            onAssistiveTechnologyClick={() =>
+              subpageSelected('assistive-technology')
+            }
+          />
+          {selectedSubpage === 'design' && <AccessibilityDesignPage />}
+          {selectedSubpage === 'overview' && <AccessibilityOverviewSubpage />}
+        </Fragment>
+      ),
+    },
+  ];
 
-export default AccessibilityPage;
+  return (
+    <GuidelinesPageBuilder
+      title="Accessibility"
+      hero={{
+        heading: 'Accessibility',
+        imageUrl: `/${AccessibilityHero}`,
+        className: getClassName('bpk-docs-accessibility-page__hero'),
+      }}
+      sections={sections}
+      nextPageLink={{
+        title: 'Strategy',
+        link: ROUTES.STRATEGY,
+      }}
+    />
+  );
+};
+
+AccessibilityPage.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(AccessibilityPage);

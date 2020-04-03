@@ -16,44 +16,48 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import BpkImage, {
   withLazyLoading,
   withLoadingBehavior,
 } from 'bpk-component-image';
 import { cssModules } from 'bpk-react-utils';
 
-import getMarkdownString from '../../helpers/markdown-helper';
-import BpkMarkdownRenderer from '../../components/DocsPageBuilder/BpkMarkdownRenderer';
-import BpkDoDont from '../../components/DocsPageBuilder/BpkDoDont';
 import Paragraph from '../../components/Paragraph';
 import PresentationBlock from '../../components/PresentationBlock';
+import AccessibilityGuidelineSectionBuilder from '../../components/AccessibilityGuidelines';
 
-import STYLES from './accessibility-design-page.scss';
-import colorAlone1 from './content/colorAlone1.md';
-import colorAlone2 from './content/colorAlone2.md';
 import calendarGood from './content/calendar_good.png';
 import calendarBad from './content/calendar_bad.png';
+import STYLES from './accessibility-design-page.scss';
 
 const getClassName = cssModules(STYLES);
-
 const documentIfExists = typeof window !== 'undefined' ? document : null;
 const FadingLazyLoadedImage = withLoadingBehavior(
   withLazyLoading(BpkImage, documentIfExists),
 );
 
-const DesignColorAlone = ({ ...rest }) => (
-  <div {...rest}>
-    <BpkMarkdownRenderer source={getMarkdownString(colorAlone1)} />
-    <div
-      className={getClassName(
-        'bpk-docs-accessibility-design-page__do-dont-wrapper',
-      )}
-    >
-      <BpkDoDont
-        type="do"
-        className={getClassName('bpk-docs-accessibility-design-page__do-dont')}
+const DesignColorAlone = props => (
+  <AccessibilityGuidelineSectionBuilder
+    {...props}
+    name="Color alone"
+    why="By not relying on colour alone to describe something, everyone will be able to understand the meaning."
+    who={
+      <ul
+        className={getClassName(
+          'bpk-docs-accessibility-design-page__no-margin',
+        )}
       >
+        <li>low vision</li>
+        <li>colour blindness</li>
+        <li>other vision impairment</li>
+        <li>cognitive impairments that affect vision, like dyslexia</li>
+        <li>viewing screen in extreme conditions, like bright sunlight</li>
+      </ul>
+    }
+    how="Use more than colour alone to convey meaning."
+    doExample={
+      <Fragment>
         <PresentationBlock
           whiteBackground
           className={getClassName(
@@ -73,11 +77,10 @@ const DesignColorAlone = ({ ...rest }) => (
           Colour and text is used to represent different price ranges. A key is
           also provided for clarity.
         </Paragraph>
-      </BpkDoDont>
-      <BpkDoDont
-        type="dont"
-        className={getClassName('bpk-docs-accessibility-design-page__do-dont')}
-      >
+      </Fragment>
+    }
+    dontExample={
+      <Fragment>
         <PresentationBlock
           className={getClassName(
             'bpk-docs-accessibility-design-page__presentation-block',
@@ -96,10 +99,19 @@ const DesignColorAlone = ({ ...rest }) => (
           Colour alone is used to represent prices. No key is provided, making
           it hard to differentiate between different price brackets
         </Paragraph>
-      </BpkDoDont>
-    </div>
-    <BpkMarkdownRenderer source={getMarkdownString(colorAlone2)} />
-  </div>
+      </Fragment>
+    }
+    tips={
+      <ul
+        className={getClassName(
+          'bpk-docs-accessibility-design-page__no-margin',
+        )}
+      >
+        <li>Add text where possible to help explain meaning</li>
+        <li>Provide additional cues like colour keys or icons</li>
+      </ul>
+    }
+  />
 );
 
 export default DesignColorAlone;

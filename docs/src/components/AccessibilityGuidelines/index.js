@@ -15,28 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* @flow strict */
+import AccessibilityGuidelineSectionBuilder from './AccessibilityGuidelineSectionBuilder';
 
-@import '~bpk-mixins/index';
-
-.bpk-docs-accessibility-design-page {
-  &__section {
-    margin-top: $bpk-spacing-xl;
-  }
-
-  &__no-margin {
-    margin: 0;
-  }
-
-  &__presentation-block {
-    margin-bottom: $bpk-spacing-lg;
-
-    &--unpadded {
-      padding: 0;
-      overflow: hidden;
-    }
-
-    &--dont {
-      background-color: $bpk-color-sky-blue;
-    }
-  }
-}
+export default AccessibilityGuidelineSectionBuilder;
