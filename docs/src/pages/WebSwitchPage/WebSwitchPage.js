@@ -30,7 +30,8 @@ const components = [
     blurb: [
       <Paragraph>
         The switch component for web is exclusively for use on mobile viewports.
-        It must never be used on desktop screen sizes.
+        It must never be used on desktop screen sizes. A checkbox is the best
+        alternative for desktop screen sizes.
       </Paragraph>,
       <Paragraph>
         It uses a regular HTML checkbox behind the scenes to maintain semantic
