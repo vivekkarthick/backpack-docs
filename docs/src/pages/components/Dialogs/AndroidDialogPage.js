@@ -25,6 +25,8 @@ import screenshotAlert from '../../../../../backpack-android/docs/Dialog/screens
 import screenshotAlertDm from '../../../../../backpack-android/docs/Dialog/screenshots/with-cta_dm.png';
 import screenshotBottomSheet from '../../../../../backpack-android/docs/Dialog/screenshots/delete-confirmation.png';
 import screenshotBottomSheetDm from '../../../../../backpack-android/docs/Dialog/screenshots/delete-confirmation_dm.png';
+import screenshotFlare from '../../../../../backpack-android/docs/Dialog/screenshots/with-flare.png';
+import screenshotFlareDm from '../../../../../backpack-android/docs/Dialog/screenshots/with-flare_dm.png';
 import { AndroidComponentPage } from '../../../components/ComponentPage';
 
 const components = [
@@ -72,6 +74,29 @@ const components = [
         height: 1920,
         src: `/${screenshotBottomSheetDm}`,
         altText: 'Bottom sheet dialog used for confirmation.',
+        subText: '(Google Pixel emulator - dark mode)',
+      },
+    ],
+  },
+  {
+    id: 'flare-view',
+    title: 'Flare view',
+    blurb: 'A dialog can be passed a BPKFlareView to show at the top.',
+    screenshots: [
+      {
+        title: 'With flare view.',
+        width: 1080,
+        height: 1920,
+        src: `/${screenshotFlare}`,
+        altText: 'Flare style dialog.',
+        subText: '(Google Pixel emulator)',
+      },
+      {
+        title: 'With flare view.',
+        width: 1080,
+        height: 1920,
+        src: `/${screenshotFlareDm}`,
+        altText: 'Flare style dialog.',
         subText: '(Google Pixel emulator - dark mode)',
       },
     ],
