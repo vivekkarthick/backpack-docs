@@ -166,8 +166,17 @@ const config = {
           {
             loader: 'file-loader',
             options: {
+              // publicPath: (url, resourcePath, context) => {
+              //   console.log(`URL`, url);
+              //   console.log(`resourcePath`, resourcePath);
+              //   console.log(`context`, context);
+              //   console.log('name', '[name]');
+              //   return url.startsWith('/') ? url : `/${url}`;
+              // }, // Loading images in markdown files doesn't work without this line.
+              // outputPath: '/',
               esModule: false, // Loading images in markdown files doesn't work without this line.
               name: '[name]_[hash].[ext]',
+              // publicPath: '/',
             },
           },
         ],
@@ -187,9 +196,9 @@ const config = {
         test: /\.md$/,
         use: [
           {
-            loader: 'gg-markdown-image-loader',
+            loader: 'markdown-image-loader',
             options: {
-              pathPrefix: '/',
+              publicPath: '/',
             },
           },
         ],
